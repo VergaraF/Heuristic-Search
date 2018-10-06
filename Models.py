@@ -16,6 +16,7 @@ class GameBoard():
     BoardPosition = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"]
     CurrentPosition = 0
     CurrentPositionByLetter = "-"
+   # Root = Node()
 
     def __init__(self, numbers):
         ##TODO : Remove magic number
@@ -25,6 +26,7 @@ class GameBoard():
         else:
             self.Board = [ x for x in numbers.split(" ") if str(x).isdigit()]
             self.findCurrentPosition()
+            self.Root = Node(self.Board)
 
     def __str__(self):
         return str(self.Board)
@@ -162,5 +164,12 @@ class GameBoard():
             self.Board[tempCurrentPos] = tempPreviousValue
             print self.BoardPosition[self.CurrentPosition]
 
+class Node(object):
 
+    def __init__(self, value):
+        self.value = value
+        self.children = []
+
+    def addChild(self, obj):
+        self.children.append(obj)
 
