@@ -1,0 +1,1 @@
+## we will store all our model classes here so we can import them and use them lately in our controller
