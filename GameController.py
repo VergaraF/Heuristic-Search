@@ -16,10 +16,10 @@ solutionPathDFS = AI.getSolution(solutionNodeDFS)
 print (solutionPathDFS)
 '''
 #solutionNodeBFS1 = AI.bestFirstSearch(1)
-solutionNodeBFS2 = AI.bestFirstSearch(2)
+solutionNodeAStar2 = AI.AStar(2)
 
 
 #solutionPathBFS1 = AI.getSolution(solutionNodeBFS1)
-solutionPathBFS2 = AI.getSolution(solutionNodeBFS2)
+solutionPathBFS2 = AI.getSolution(solutionNodeAStar2)
 #print (solutionPathBFS1)
 print (solutionPathBFS2)

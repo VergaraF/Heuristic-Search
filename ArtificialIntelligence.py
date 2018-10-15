@@ -60,7 +60,43 @@ class ArtificialIntelligence():
 
         print "Open is empty - No solution found"
 
-    def bestFirstSearch(self, heuristicChoice):
+    def bestFirstSearch(self, depth, heuristicChoice):
+        self.usingHeuristic = True
+        self.closed = []
+
+        self.usingHeuristic = True
+        self.open = [(1, 1, self.rootNode)]
+        self.closed = []
+        self.solutionPath = []
+
+        while self.open:
+            visiting = self.open.pop(0)
+            nodeVisiting = visiting[2]
+
+            if self.checkIfGoal(nodeVisiting):
+                return nodeVisiting
+
+            self.closed.append(nodeVisiting)
+            if nodeVisiting.depth >= depth:
+                print "Too deep, skip"
+                continue
+            children = self.generateChildren(nodeVisiting)
+
+            for child in children:
+                if heuristicChoice == 1:
+                    score = self.NumberOfTilesInWrongPosition(child.gameBoard.Board)
+                    self.open.append((score, child.gameBoard.Moves[-1], child))
+                elif heuristicChoice == 2:
+                    score = self.PermutationInversion(child.gameBoard.Board)
+                    if score % 2 == 0 or score <= 4:
+                        self.open.append((score, child.gameBoard.Moves[-1], child))
+
+            self.open = sorted(self.open, key=operator.itemgetter(0, 1))
+
+        print "Nothing was found"
+
+
+    def AStar(self, heuristicChoice):
         self.usingHeuristic = True
         self.closed = []
 
@@ -83,43 +119,13 @@ class ArtificialIntelligence():
             for child in children:
                 if heuristicChoice == 1:
                     score = self.NumberOfTilesInWrongPosition(child.gameBoard.Board)
-                    self.open.append((score, child.gameBoard.Moves[-1], child))
+                    self.open.append((score + child.depth, child.gameBoard.Moves[-1], child))
                 elif heuristicChoice == 2:
                     score = self.PermutationInversion(child.gameBoard.Board)
-                    self.open.append((score, child.gameBoard.Moves[-1], child))
+                    self.open.append((score + child.depth, child.gameBoard.Moves[-1], child))
 
             self.open = sorted(self.open, key=operator.itemgetter(0, 1))
-
-
-    def AStar(self, heuristicChoice):
-        self.usingHeuristic = True
-        self.closed = []
-
-        self.usingHeuristic = True
-        self.open = [(1, self.rootNode)]
-        self.closed = []
-        self.solutionPath = []
-
-        while self.open:
-            visiting = self.open.pop(0)
-            nodeVisiting = visiting[1]
-
-            if self.checkIfGoal(nodeVisiting):
-                return nodeVisiting
-
-            self.closed.append(nodeVisiting)
-
-            children = self.generateChildren(nodeVisiting)
-
-            for child in children:
-                if heuristicChoice == 1:
-                    score = self.NumberOfTilesInWrongPosition(child.gameBoard.Board)
-                    self.open.append((score + child.depth, child))
-                elif heuristicChoice == 2:
-                    score = self.PermutationInversion(child.gameBoard.Board)
-                    self.open.append((score + child.depth, child))
-
-            self.open.sort(key=itemgetter(0))
+            print "Sorted"
 
 
 
