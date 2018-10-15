@@ -18,11 +18,12 @@ class GameBoard():
     BoardPosition = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"]
     CurrentPosition = 0
     CurrentPositionByLetter = "-"
-    Moves = [0]
+
 
     def __init__(self, state):
         self.Board = copy.deepcopy(state)
         self.findCurrentPosition()
+        self.Moves = [0]
 
     def __str__(self):
         return str(self.Board)

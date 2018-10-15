@@ -42,6 +42,7 @@ class ArtificialIntelligence():
 
         while self.open:
             nodeVisiting = self.open.pop()
+            print nodeVisiting
             if self.checkIfGoal(nodeVisiting):
                 return nodeVisiting
 
@@ -72,7 +73,7 @@ class ArtificialIntelligence():
         while self.open:
             visiting = self.open.pop(0)
             nodeVisiting = visiting[2]
-
+            print nodeVisiting
             if self.checkIfGoal(nodeVisiting):
                 return nodeVisiting
 
@@ -88,15 +89,14 @@ class ArtificialIntelligence():
                     self.open.append((score, child.gameBoard.Moves[-1], child))
                 elif heuristicChoice == 2:
                     score = self.PermutationInversion(child.gameBoard.Board)
-                    if score % 2 == 0 or score <= 4:
-                        self.open.append((score, child.gameBoard.Moves[-1], child))
+                    self.open.append((score, child.gameBoard.Moves[-1], child))
 
             self.open = sorted(self.open, key=operator.itemgetter(0, 1))
 
         print "Nothing was found"
 
 
-    def AStar(self, heuristicChoice):
+    def AStar(self, depth, heuristicChoice):
         self.usingHeuristic = True
         self.closed = []
 
@@ -109,10 +109,16 @@ class ArtificialIntelligence():
             visiting = self.open.pop(0)
             nodeVisiting = visiting[2]
 
+            print nodeVisiting
+
             if self.checkIfGoal(nodeVisiting):
                 return nodeVisiting
 
             self.closed.append(nodeVisiting)
+
+            if nodeVisiting.depth >= depth:
+                print "skipping node"
+                continue
 
             children = self.generateChildren(nodeVisiting)
 
@@ -129,6 +135,9 @@ class ArtificialIntelligence():
 
 
 
+
+
+
     def generateChildren(self, parentNode):
         children = []
 
@@ -138,7 +147,7 @@ class ArtificialIntelligence():
                 newNode = Node(tempBoard, parentNode.depth + 1, action=tempBoard.CurrentPositionByLetter, parent=parentNode)
                 if self.checkValidChild(newNode, parentNode):
                     children.append(newNode)
-                    print newNode
+
 
         return children
 
@@ -188,10 +197,10 @@ class ArtificialIntelligence():
 
     def PermutationInversion(self, gameBoard):
         score = 0
-        for x in range(len(gameBoard) - 1):
+        for x in range(len(gameBoard)-1):
             positionInGoalState = self.goalState.index(gameBoard[x])
             listOfNumbersInLeftSide = self.goalState[:positionInGoalState]
-            for i in range(x +1, len(gameBoard) - 1):
+            for i in range(x +1, len(gameBoard)-1):
                 if self.goalState[i] in listOfNumbersInLeftSide:
                     score = score + 1
         return score
