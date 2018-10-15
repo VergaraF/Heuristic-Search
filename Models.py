@@ -41,6 +41,7 @@ class GameBoard():
             if (movement is  Movement.RIGHT):
                 try:
                     self.moveRight()
+                    self.Moves.append(movement.value)
 
                 except:
                    #print "Illegal move right"
@@ -49,6 +50,7 @@ class GameBoard():
             if (movement is Movement.LEFT):
                 try:
                     self.moveLeft()
+                    self.Moves.append(movement.value)
                 except:
                     #print "Illegal move left"
                     return False
@@ -56,6 +58,7 @@ class GameBoard():
             if (movement is Movement.DOWN):
                 try:
                     self.moveDown()
+                    self.Moves.append(movement.value)
                 except:
                     #print "Illegal move down"
                     return False
@@ -63,6 +66,7 @@ class GameBoard():
             if (movement is Movement.UP):
                 try:
                     self.moveUp()
+                    self.Moves.append(movement.value)
                 except:
                     #print "Illegal move up"
                     return False
@@ -71,6 +75,7 @@ class GameBoard():
                 try:
                     self.moveLeft()
                     self.moveDown()
+                    self.Moves.append(movement.value)
                 except:
                     #print "Illegal move down left"
                     return False
@@ -79,6 +84,7 @@ class GameBoard():
                 try:
                    self.moveRight()
                    self.moveDown()
+                   self.Moves.append(movement.value)
                 except:
                    # print "Illegal move down right"
                     return False
@@ -87,6 +93,7 @@ class GameBoard():
                 try:
                     self.moveLeft()
                     self.moveUp()
+                    self.Moves.append(movement.value)
                 except:
                    # print "Illegal move up left"
                     return False
@@ -95,12 +102,13 @@ class GameBoard():
                 try:
                     self.moveRight()
                     self.moveUp()
+                    self.Moves.append(movement.value)
                 except:
                     #print "Illegal move up right"
                     return False
 
             self.findCurrentPosition()
-            self.Moves.append(movement.value)
+
             return True
 
 

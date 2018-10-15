@@ -125,7 +125,7 @@ class ArtificialIntelligence():
                     self.open.append((score + child.depth, child.gameBoard.Moves[-1], child))
 
             self.open = sorted(self.open, key=operator.itemgetter(0, 1))
-            print "Sorted"
+
 
 
 
